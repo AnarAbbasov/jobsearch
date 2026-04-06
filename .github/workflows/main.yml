@@ -1,4 +1,4 @@
-            - name: Build and push Docker images
+- name: Build and push Docker images
   # You may pin to the exact commit or the version.
   # uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294
   uses: docker/build-push-action@v7.0.0
