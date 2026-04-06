@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Search Activity Log</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: linear-gradient(135deg, #dfe9f3 0%, #ffffff 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: #ffffff;
+      margin: 40px;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.12);
+      border: 1px solid rgba(0, 120, 255, 0.15);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 30px;
+      color: #2a2a2a;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-top: 25px;
+      padding: 25px 25px 25px 60px;
+      background: #eef3ff;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 120, 255, 0.2);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      border: 1px solid #bfc7d1;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #ffffff;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #0078ff;
+      box-shadow: 0 0 6px rgba(0,120,255,0.3);
+      outline: none;
+    }
+
+    button {
+      padding: 14px 22px;
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s, box-shadow 0.15s;
+      width: 100%;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Log button */
+    .log-btn {
+      display: block;
+      margin: 25px auto 0 auto;
+      padding: 12px 20px;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #0078ff, #005fcc);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .log-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Job Search Activity Log</h1>
+
+    <h2>Detailed Activity Log (WA ESD Compliant)</h2>
+
+    <form action="/cgi-bin/log_job_search.cgi" method="post">
+
+      <label>Date of Application / Contact:</label>
+      <input type="date" name="date" required>
+
+      <label>Employer / Website:</label>
+      <input type="text" name="employer" required>
+
+      <label>Job Title / Type of Work Sought:</label>
+      <input type="text" name="position" required>
+
+      <label>Method of Contact:</label>
+      <select name="method" required>
+        <option value="">Select one…</option>
+        <option>Online Application</option>
+        <option>Email</option>
+        <option>Phone Call</option>
+        <option>In Person</option>
+        <option>Job Fair</option>
+        <option>Referral</option>
+        <option>Other</option>
+      </select>
+
+      <label>Person Contacted (optional):</label>
+      <input type="text" name="contact_person">
+
+      <label>Employer Contact Info (email, phone, or URL):</label>
+      <input type="text" name="contact_info">
+
+      <label>Outcome / Result:</label>
+      <select name="outcome" required>
+        <option value="">Select one…</option>
+        <option>Applied</option>
+        <option>Interview Scheduled</option>
+        <option>Left Message</option>
+        <option>No Response</option>
+        <option>Rejected</option>
+        <option>Other</option>
+      </select>
+
+      <label>Notes:</label>
+      <textarea name="notes" rows="4"></textarea>
+
+      <button type="submit">Submit Activity</button>
+    </form>
+
+    <!-- Link to log viewer -->
+    <a class="log-btn" href="/cgi-bin/showlog.sh">📄 View Logged Activities</a>
+
+  </div>
+</body>
+</html>
