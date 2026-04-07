@@ -57,19 +57,55 @@ cat <<EOF
 </tr>
 EOF
 
-# Read and print rows
+# Read and print rows 
 while IFS='&' read -r date employer position method contact_person contact_info outcome notes
 do
-    printf "<tr>"
-    printf "<td>%s</td>" "${date##*=}"
-    printf "<td>%s</td>" "${employer##*=}"
-    printf "<td>%s</td>" "${position##*=}"
-    printf "<td>%s</td>" "${method##*=}"
-    printf "<td>%s</td>" "${contact_person##*=}"
-    printf "<td>%s</td>" "${contact_info##*=}"
-    printf "<td>%s</td>" "${outcome##*=}"
-    printf "<td>%s</td>" "${notes##*=}"
-    printf "</tr>\n"
+   # employer="${employer//+/ }"
+   # employer="${employer//%3A/:}"
+   # employer="${employer//%2F/\/}"
+   # position="${position//+/ }"
+   # method="${method//+/ }"
+   # contact_person="${contact_person//+/ }"
+   # contact_person="${contact_person//%3A/: }"
+   # contact_person="${contact_person//%2F/\/ }"
+#
+   # contact_info="${contact_info//+/ }"
+   # contact_info="${contact_info//%3A/:}"
+   # contact_info="${contact_info//%2F/\/}"
+   # contact_info="${contact_info//%3F/?}"
+   #  #contact_info="${contact_info//%3D/=}"
+     #contact_info="${contact_info//%26/&}"
+    #printf "<tr>"
+    #printf "<td>%s</td>" "${date##*=}"
+    #printf "<td>%s</td>" "${employer##*=}"
+    #printf "<td>%s</td>" "${position##*=}"
+    #printf "<td>%s</td>" "${method##*=}"
+    #printf "<td>%s</td>" "${contact_person##*=}"
+    #printf "<td>%s</td>" "${contact_info##*=}"
+    #printf "<td>%s</td>" "${outcome##*=}"
+    #printf "<td>%s</td>" "${notes##*=}"
+    #printf "</tr>\n"
+
+
+ printf "<tr>"
+ printf "<td>%s</td>" "${date##*=}"
+ printf "<td>%s</td>" "${employer#*=}"
+ printf "<td>%s</td>" "${position#*=}"
+ printf "<td>%s</td>" "${method#*=}"
+ printf "<td>%s</td>" "${contact_person#*=}"
+ printf "<td>%s</td>" "${contact_info#*=}"
+ printf "<td>%s</td>" "${outcome#*=}"
+ printf "<td>%s</td>" "${notes#*=}"
+ printf "</tr>\n"
+
+
+
+
+
+
+
+
+
 done < /var/www/html/data/js.txt
 
 # Close HTML

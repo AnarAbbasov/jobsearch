@@ -10,8 +10,28 @@ elif [ "$REQUEST_METHOD" = "POST" ]; then
     read -n "$CONTENT_LENGTH" data
 fi
 
-# Log the data
-echo "$data" >> /var/www/html/data/js.txt
+########################################
+# 1. URL-DECODE FUNCTION
+########################################
+urldecode() {
+    local raw="$1"
+    raw="${raw//+/ }"           # plus → space
+    printf '%b' "${raw//%/\\x}" # %XX → byte
+}
+
+decoded=$(urldecode "$data")
+
+########################################
+# 2. SANITIZE FOR LOGGING
+########################################
+# Remove CR, LF, tabs, and non-printable characters
+cleaned=$(printf '%s' "$decoded" | tr -d '\r\n\t' | tr -cd '[:print:]')
+
+########################################
+# 3. LOG CLEANED DATA
+########################################
+echo "$cleaned" >> /var/www/html/data/js.txt
+########################################
 
 # HTML response
 cat <<EOF
@@ -47,7 +67,7 @@ cat <<EOF
 </head>
 <body>
     <h2>Data received and logged successfully</h2>
-    <p><strong>Logged value:</strong> $data</p>
+    <p><strong>Logged value:</strong> $cleaned</p>
 
     <a class="btn" href="/index.html">Return to Main Page</a>
     <a class="btn" href="/cgi-bin/showlog.sh">View Log File</a>
