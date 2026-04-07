@@ -1,0 +1,8 @@
+services:
+  jobster:
+    image: anarabbasov/jobster:0.0.1
+    ports:
+      - "8081:80"
+    volumes:
+      - ./data:/var/www/html/data
+    restart: unless-stopped
