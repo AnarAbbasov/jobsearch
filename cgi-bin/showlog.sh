@@ -3,14 +3,23 @@
 echo "Content-Type: text/html"
 echo
 
-# Read GET or POST data
-if [ "$REQUEST_METHOD" = "GET" ]; then
-    data="$QUERY_STRING"
-elif [ "$REQUEST_METHOD" = "POST" ]; then
-    read -n "$CONTENT_LENGTH" data
-fi
+DB="/var/www/html/data/jobsearch.db"
 
-# Start HTML
+########################################
+# HTML ESCAPE FUNCTION
+########################################
+html_escape() {
+    echo "$1" | sed \
+        -e 's/&/\&amp;/g' \
+        -e 's/</\&lt;/g' \
+        -e 's/>/\&gt;/g' \
+        -e 's/"/\&quot;/g' \
+        -e "s/'/\&#39;/g"
+}
+
+########################################
+# START HTML
+########################################
 cat <<EOF
 <!DOCTYPE html>
 <html>
@@ -33,9 +42,7 @@ cat <<EOF
             font-size: 16px;
             transition: 0.2s;
         }
-        .btn:hover {
-            background: #005fcc;
-        }
+        .btn:hover { background: #005fcc; }
     </style>
 </head>
 <body>
@@ -57,58 +64,28 @@ cat <<EOF
 </tr>
 EOF
 
-# Read and print rows 
-while IFS='&' read -r date employer position method contact_person contact_info outcome notes
+########################################
+# READ FROM SQLITE AND OUTPUT ROWS
+########################################
+
+sqlite3 -csv "$DB" "SELECT date, employer, position, method, contact_person, contact_info, outcome, notes FROM logs ORDER BY id DESC;" \
+| while IFS=',' read -r date employer position method contact_person contact_info outcome notes
 do
-   # employer="${employer//+/ }"
-   # employer="${employer//%3A/:}"
-   # employer="${employer//%2F/\/}"
-   # position="${position//+/ }"
-   # method="${method//+/ }"
-   # contact_person="${contact_person//+/ }"
-   # contact_person="${contact_person//%3A/: }"
-   # contact_person="${contact_person//%2F/\/ }"
-#
-   # contact_info="${contact_info//+/ }"
-   # contact_info="${contact_info//%3A/:}"
-   # contact_info="${contact_info//%2F/\/}"
-   # contact_info="${contact_info//%3F/?}"
-   #  #contact_info="${contact_info//%3D/=}"
-     #contact_info="${contact_info//%26/&}"
-    #printf "<tr>"
-    #printf "<td>%s</td>" "${date##*=}"
-    #printf "<td>%s</td>" "${employer##*=}"
-    #printf "<td>%s</td>" "${position##*=}"
-    #printf "<td>%s</td>" "${method##*=}"
-    #printf "<td>%s</td>" "${contact_person##*=}"
-    #printf "<td>%s</td>" "${contact_info##*=}"
-    #printf "<td>%s</td>" "${outcome##*=}"
-    #printf "<td>%s</td>" "${notes##*=}"
-    #printf "</tr>\n"
+    printf "<tr>"
+    printf "<td>%s</td>" "$(html_escape "$date")"
+    printf "<td>%s</td>" "$(html_escape "$employer")"
+    printf "<td>%s</td>" "$(html_escape "$position")"
+    printf "<td>%s</td>" "$(html_escape "$method")"
+    printf "<td>%s</td>" "$(html_escape "$contact_person")"
+    printf "<td>%s</td>" "$(html_escape "$contact_info")"
+    printf "<td>%s</td>" "$(html_escape "$outcome")"
+    printf "<td>%s</td>" "$(html_escape "$notes")"
+    printf "</tr>\n"
+done
 
-
- printf "<tr>"
- printf "<td>%s</td>" "${date##*=}"
- printf "<td>%s</td>" "${employer#*=}"
- printf "<td>%s</td>" "${position#*=}"
- printf "<td>%s</td>" "${method#*=}"
- printf "<td>%s</td>" "${contact_person#*=}"
- printf "<td>%s</td>" "${contact_info#*=}"
- printf "<td>%s</td>" "${outcome#*=}"
- printf "<td>%s</td>" "${notes#*=}"
- printf "</tr>\n"
-
-
-
-
-
-
-
-
-
-done < /var/www/html/data/js.txt
-
-# Close HTML
+########################################
+# END HTML
+########################################
 cat <<EOF
 </table>
 </body>
