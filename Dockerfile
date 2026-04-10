@@ -12,5 +12,7 @@ COPY ./cgi-bin/edit_entry.sh /var/www/cgi-bin/
 RUN chmod +x /var/www/cgi-bin/edit_entry.sh
 COPY ./cgi-bin/update_entry.sh /var/www/cgi-bin/
 RUN chmod +x /var/www/cgi-bin/update_entry.sh
+COPY ./cgi-bin/delete_entry.sh /var/www/cgi-bin/
+RUN chmod +x /var/www/cgi-bin/delete_entry.sh
 # Copy HTML
 COPY ./www/index.html /var/www/html/
