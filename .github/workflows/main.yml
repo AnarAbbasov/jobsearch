@@ -35,4 +35,5 @@ jobs:
           push: true
           tags: |
             anarabbasov/jobster:${{ github.event.inputs.image_tag }}
-            anarabbasov/jobster:latest
+           
+            
