@@ -37,7 +37,22 @@ cat <<EOF
         transition: 0.2s;
     }
     .btn:hover { background: #005fcc; }
+    .btn-delete {
+        background: #d9534f;
+    }
+    .btn-delete:hover {
+        background: #b52b27;
+    }
 </style>
+
+<script>
+function confirmDelete(id) {
+    if (confirm("Are you sure you want to delete this entry? This cannot be undone.")) {
+        window.location.href = "/cgi-bin/delete_entry.sh?id=" + id;
+    }
+}
+</script>
+
 </head>
 <body>
 
@@ -55,6 +70,7 @@ cat <<EOF
     <th>Outcome</th>
     <th>Notes</th>
     <th>Edit</th>
+    <th>Delete</th>
 </tr>
 EOF
 
@@ -72,6 +88,8 @@ do
     printf "<td>%s</td>" "$(html_escape "$notes")"
 
     printf "<td><a class='btn' href='/cgi-bin/edit_entry.sh?id=%s'>Edit</a></td>" "$id"
+
+    printf "<td><a class='btn btn-delete' href='javascript:void(0);' onclick='confirmDelete(%s)'>Delete</a></td>" "$id"
 
     printf "</tr>\n"
 done
