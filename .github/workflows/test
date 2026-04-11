@@ -1,0 +1,5 @@
+docker run -d \
+  -p 3000:3000 \
+  -e GF_INSTALL_PLUGINS=frser-sqlite-datasource \
+  --name=grafana \
+  grafana/grafana-oss:latest
