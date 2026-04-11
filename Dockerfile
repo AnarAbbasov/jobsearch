@@ -2,6 +2,7 @@ FROM darrenlester/cgi
 
 # Install SQLite
 RUN apt-get update && apt-get install -y sqlite3
+RUN apt-get update && apt-get install -y python3 python3-pip
 
 # Copy CGI scripts
 COPY ./cgi-bin/log_job_search.cgi /var/www/cgi-bin/
