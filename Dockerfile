@@ -14,4 +14,5 @@ RUN chmod +x /usr/lib/cgi-bin/*
 COPY ./www/index.html /var/www/html/
 
 # Run Apache in the foreground (correct for containers)
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+ENTRYPOINT ["apache2ctl", "-D", "FOREGROUND"]
+
