@@ -4,5 +4,5 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - /home/ansible/jobsearch:/var/www/html/data
+      - /home/ansible/jobsearch/www/data:/var/www/html/data
     restart: unless-stopped
