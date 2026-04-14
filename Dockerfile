@@ -1,19 +1,17 @@
 FROM darrenlester/cgi
 
-# Install SQLite
-RUN apt-get update && apt-get install -y sqlite3
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Install SQLite + Python
+RUN apt-get update && \
+    apt-get install -y sqlite3 python3 python3-pip && \
+    apt-get clean
 
 # Copy CGI scripts
-COPY ./cgi-bin/log_job_search.cgi /var/www/cgi-bin/
-COPY ./cgi-bin/showlog.sh /var/www/cgi-bin/
-RUN chmod +x /var/www/cgi-bin/log_job_search.cgi
-RUN chmod +x /var/www/cgi-bin/showlog.sh
-COPY ./cgi-bin/edit_entry.sh /var/www/cgi-bin/
-RUN chmod +x /var/www/cgi-bin/edit_entry.sh
-COPY ./cgi-bin/update_entry.sh /var/www/cgi-bin/
-RUN chmod +x /var/www/cgi-bin/update_entry.sh
-COPY ./cgi-bin/delete_entry.sh /var/www/cgi-bin/
-RUN chmod +x /var/www/cgi-bin/delete_entry.sh
+COPY ./cgi-bin/*.cgi /usr/lib/cgi-bin/
+COPY ./cgi-bin/*.sh /usr/lib/cgi-bin/
+RUN chmod +x /usr/lib/cgi-bin/*
+
 # Copy HTML
 COPY ./www/index.html /var/www/html/
+
+# Run Apache in the foreground (correct for containers)
+CMD ["apache2ctl", "-D", "FOREGROUND"]
