@@ -28,6 +28,7 @@ cat <<EOF
     .btn {
         display: inline-block;
         margin-bottom: 20px;
+        margin-right: 10px;
         padding: 10px 18px;
         background: #0078ff;
         color: white;
@@ -57,7 +58,9 @@ function confirmDelete(id) {
 <body>
 
 <h2>Logged Entries</h2>
+
 <a class="btn" href="/index.html">⬅ Back to Main Page</a>
+<a class="btn" href="/cgi-bin/download_csv.sh">⬇ Download CSV</a>
 
 <table>
 <tr>
@@ -88,7 +91,6 @@ do
     printf "<td>%s</td>" "$(html_escape "$notes")"
 
     printf "<td><a class='btn' href='/cgi-bin/edit_entry.sh?id=%s'>Edit</a></td>" "$id"
-
     printf "<td><a class='btn btn-delete' href='javascript:void(0);' onclick='confirmDelete(%s)'>Delete</a></td>" "$id"
 
     printf "</tr>\n"
