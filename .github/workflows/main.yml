@@ -1,3 +1,13 @@
+name: test
+jobs:
+  docker:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: tes
+        run: ls
+
+
+
 name: Build and push to docker hub
 
 on:
