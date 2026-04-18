@@ -1,5 +1,6 @@
 
 
+
 name: Build and push to docker hub
 
 on:
@@ -39,7 +40,7 @@ jobs:
             anarabbasov/jobster:${{ github.event.inputs.image_tag }}
   test:
       runs-on: ubuntu-22.04
-
+      needs: docker
       steps:
        - name: rty
          run: ls
