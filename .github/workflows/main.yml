@@ -1,11 +1,3 @@
-name: test
-jobs:
-  docker:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: tes
-        run: ls
-
 
 
 name: Build and push to docker hub
@@ -45,5 +37,11 @@ jobs:
           push: true
           tags: |
             anarabbasov/jobster:${{ github.event.inputs.image_tag }}
+  test:
+      runs-on: ubuntu-22.04
+
+      steps:
+       - name: rty
+         run: ls
            
             
